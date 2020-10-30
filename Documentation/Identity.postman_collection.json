@@ -1,0 +1,124 @@
+{
+	"info": {
+		"_postman_id": "e8de12ff-726e-4a2b-a220-d4d2f2a2866a",
+		"name": "Identity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "IdentityServer.API",
+			"item": [
+				{
+					"name": "Discovery endpoint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{IDENTITYSERVERAPI_HOST}}/.well-known/openid-configuration",
+							"host": [
+								"{{IDENTITYSERVERAPI_HOST}}"
+							],
+							"path": [
+								".well-known",
+								"openid-configuration"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Test.API",
+			"item": [
+				{
+					"name": "Request token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0dcfaf88-e1e0-4f19-bbbd-ee2464b594e3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"TESTAPI_TOKEN\", jsonData.access_token);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "test.api",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "511536EF-F270-4058-80CA-1C89C192F69A",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "test.api",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{IDENTITYSERVERAPI_HOST}}/connect/token",
+							"host": [
+								"{{IDENTITYSERVERAPI_HOST}}"
+							],
+							"path": [
+								"connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get weatherforecast",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TESTAPI_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{TESTAPI_HOST}}/api/weatherforecast",
+							"host": [
+								"{{TESTAPI_HOST}}"
+							],
+							"path": [
+								"api",
+								"weatherforecast"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	]
+}

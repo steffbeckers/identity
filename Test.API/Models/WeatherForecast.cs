@@ -1,6 +1,6 @@
 using System;
 
-namespace Test.API
+namespace Test.API.Models
 {
     public class WeatherForecast
     {
