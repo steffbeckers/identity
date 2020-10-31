@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.API", "Test.API\Test.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.API", "IdentityServer.API\IdentityServer.API.csproj", "{A9A2351D-4440-4280-9A29-C565ADE2E192}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.EFStores", "IdentityServer.EFStores\IdentityServer.EFStores.csproj", "{E0300C79-1318-451C-9F57-D05821F5BAFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A9A2351D-4440-4280-9A29-C565ADE2E192}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9A2351D-4440-4280-9A29-C565ADE2E192}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9A2351D-4440-4280-9A29-C565ADE2E192}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0300C79-1318-451C-9F57-D05821F5BAFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0300C79-1318-451C-9F57-D05821F5BAFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0300C79-1318-451C-9F57-D05821F5BAFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0300C79-1318-451C-9F57-D05821F5BAFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
