@@ -24,6 +24,13 @@ namespace Test.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("Bearer")
+                .AddIdentityServerAuthentication("Bearer", options =>
+                {
+                    options.ApiName = "test.api";
+                    options.Authority = "https://localhost:5000";
+                });
+
             services.AddControllers();
         }
 
@@ -37,6 +44,8 @@ namespace Test.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
