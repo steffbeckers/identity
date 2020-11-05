@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "IdentityServer.API",
+			"name": "IdentityServer",
 			"item": [
 				{
 					"name": "Discovery endpoint",
@@ -14,9 +14,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{IDENTITYSERVERAPI_HOST}}/.well-known/openid-configuration",
+							"raw": "{{IDENTITYSERVER_HOST}}/.well-known/openid-configuration",
 							"host": [
-								"{{IDENTITYSERVERAPI_HOST}}"
+								"{{IDENTITYSERVER_HOST}}"
 							],
 							"path": [
 								".well-known",
@@ -38,7 +38,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0dcfaf88-e1e0-4f19-bbbd-ee2464b594e3",
+								"id": "1d13fef1-3775-4fdb-8738-487f597330f1",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);\r",
 									"postman.setEnvironmentVariable(\"TESTAPI_TOKEN\", jsonData.access_token);\r",
@@ -61,25 +61,28 @@
 								},
 								{
 									"key": "client_id",
-									"value": "test.api",
+									"value": "test.client",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "511536EF-F270-4058-80CA-1C89C192F69A",
+									"value": "SuperSecretPassword",
 									"type": "text"
 								},
 								{
 									"key": "scope",
-									"value": "test.api",
+									"value": "test.api.read",
 									"type": "text"
 								}
-							]
+							],
+							"options": {
+								"urlencoded": {}
+							}
 						},
 						"url": {
-							"raw": "{{IDENTITYSERVERAPI_HOST}}/connect/token",
+							"raw": "{{IDENTITYSERVER_HOST}}/connect/token",
 							"host": [
-								"{{IDENTITYSERVERAPI_HOST}}"
+								"{{IDENTITYSERVER_HOST}}"
 							],
 							"path": [
 								"connect",
@@ -120,5 +123,6 @@
 			],
 			"protocolProfileBehavior": {}
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
