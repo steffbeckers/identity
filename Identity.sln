@@ -3,31 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30615.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.API", "Test.API\Test.API.csproj", "{4D9B650C-AA30-4B02-BB91-0AAEF699DDE7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.API", "IdentityServer.API\IdentityServer.API.csproj", "{A9A2351D-4440-4280-9A29-C565ADE2E192}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.EFStores", "IdentityServer.EFStores\IdentityServer.EFStores.csproj", "{E0300C79-1318-451C-9F57-D05821F5BAFC}"
-EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4D9B650C-AA30-4B02-BB91-0AAEF699DDE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D9B650C-AA30-4B02-BB91-0AAEF699DDE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D9B650C-AA30-4B02-BB91-0AAEF699DDE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D9B650C-AA30-4B02-BB91-0AAEF699DDE7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A9A2351D-4440-4280-9A29-C565ADE2E192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9A2351D-4440-4280-9A29-C565ADE2E192}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9A2351D-4440-4280-9A29-C565ADE2E192}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9A2351D-4440-4280-9A29-C565ADE2E192}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E0300C79-1318-451C-9F57-D05821F5BAFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0300C79-1318-451C-9F57-D05821F5BAFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E0300C79-1318-451C-9F57-D05821F5BAFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0300C79-1318-451C-9F57-D05821F5BAFC}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
