@@ -1,4 +1,5 @@
 ﻿using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System;
@@ -35,10 +36,12 @@ namespace IdentityServer
                     Name = "test.api",
                     DisplayName = "Test API",
                     Description = "Allow the application to access Test API on your behalf",
-                    ApiSecrets = new List<Secret> {
+                    ApiSecrets = new List<Secret>
+                    {
                         new Secret("ScopeSecret".Sha256()) // change me!
                     },
-                    Scopes = new List<string> {
+                    Scopes = new List<string>
+                    {
                         "test.api.read",
                         "test.api.write"
                     },
@@ -65,13 +68,35 @@ namespace IdentityServer
             {
                 new Client
                 {
-                    ClientId = "test.client",
-                    ClientName = "Test client application using client credentials",
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    ClientSecrets = new List<Secret> {
+                    ClientId = "oauth",
+                    ClientName = "Test client using client credentials",
+                    ClientSecrets = new List<Secret>
+                    {
                         new Secret("SuperSecretPassword".Sha256()) // change me!
                     },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = new List<string> { "test.api.read" }
+                },
+                new Client
+                {
+                    ClientId = "oidc",
+                    ClientName = "Test client using the authorization code flow with Proof-Key for Code Exchange (PKCE)",
+                    ClientSecrets = new List<Secret>
+                    {
+                        new Secret("SuperSecretPassword".Sha256()) // change me!
+                    },
+                    RedirectUris = new List<string> {"https://localhost:5002/signin-oidc"},
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        "role",
+                        "test.api.read"
+                    },
+                    RequirePkce = true,
+                    AllowPlainTextPkce = false
                 }
             };
         }
