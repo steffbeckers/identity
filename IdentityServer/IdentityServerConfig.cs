@@ -1,0 +1,114 @@
+﻿using IdentityModel;
+using IdentityServer4.Models;
+using IdentityServer4.Test;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+
+namespace IdentityServer
+{
+    internal class Resources
+    {
+        public static List<IdentityResource> GetIdentityResources()
+        {
+            return new List<IdentityResource>
+            {
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile(),
+                new IdentityResources.Email(),
+                new IdentityResource
+                {
+                    Name = "role",
+                    UserClaims = new List<string> { "role" }
+                }
+            };
+        }
+
+        public static List<ApiResource> GetApiResources()
+        {
+            return new List<ApiResource>
+            {
+                new ApiResource
+                {
+                    Name = "test.api",
+                    DisplayName = "Test API",
+                    Description = "Allow the application to access Test API on your behalf",
+                    ApiSecrets = new List<Secret> {
+                        new Secret("ScopeSecret".Sha256()) // change me!
+                    },
+                    Scopes = new List<string> {
+                        "test.api.read",
+                        "test.api.write"
+                    },
+                    UserClaims = new List<string> { "role" }
+                }
+            };
+        }
+
+        public static List<ApiScope> GetApiScopes()
+        {
+            return new List<ApiScope>
+            {
+                new ApiScope("test.api.read", "Read Access to Test API"),
+                new ApiScope("test.api.write", "Write Access to Test API")
+            };
+        }
+    }
+
+    internal class Clients
+    {
+        public static List<Client> Get()
+        {
+            return new List<Client>
+            {
+                new Client
+                {
+                    ClientId = "test.client",
+                    ClientName = "Test client application using client credentials",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    ClientSecrets = new List<Secret> {
+                        new Secret("SuperSecretPassword".Sha256()) // change me!
+                    },
+                    AllowedScopes = new List<string> { "test.api.read" }
+                }
+            };
+        }
+    }
+
+    internal class TestUsers
+    {
+        public static List<TestUser> Get()
+        {
+            return new List<TestUser>
+            {
+                new TestUser {
+                    SubjectId = "DCC99315-C7D7-42A9-8099-D94E52DD15A5",
+                    Username = "steff",
+                    Password = "steff",
+                    Claims = new List<Claim> {
+                        new Claim(JwtClaimTypes.Email, "steff@steffbeckers.eu"),
+                        new Claim(JwtClaimTypes.Role, "admin")
+                    }
+                },
+                new TestUser {
+                    SubjectId = "0409F062-85BE-4B6F-BA42-B700A3CD3E65",
+                    Username = "alice",
+                    Password = "alice",
+                    Claims = new List<Claim> {
+                        new Claim(JwtClaimTypes.Email, "alice@alice.com"),
+                    }
+                },
+                new TestUser {
+                    SubjectId = "7DDE665A-5CF3-4A1C-90FB-0EBF71666D99",
+                    Username = "bob",
+                    Password = "bob",
+                    Claims = new List<Claim> {
+                        new Claim(JwtClaimTypes.Email, "bob@bob.org"),
+                    }
+                }
+            };
+        }
+    }
+}
