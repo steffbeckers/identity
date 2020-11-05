@@ -27,6 +27,7 @@ namespace Test.MVC.Controllers
         [Authorize]
         public IActionResult Secure()
         {
+            _logger.LogInformation("Access granted to Secure page for: " + User.Identity.Name);
             return View();
         }
 
