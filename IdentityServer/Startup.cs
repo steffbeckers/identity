@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace IdentityServer
 {
@@ -17,12 +19,27 @@ namespace IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionString = configuration.GetConnectionString("IdentityServerDb");
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
             services.AddIdentityServer()
-                .AddInMemoryClients(Clients.Get())
-                .AddInMemoryIdentityResources(Resources.GetIdentityResources())
-                .AddInMemoryApiResources(Resources.GetApiResources())
-                .AddInMemoryApiScopes(Resources.GetApiScopes())
-                .AddTestUsers(TestUsers.Get())
+                // SQL Database
+                .AddOperationalStore(options =>
+                    options.ConfigureDbContext =
+                        builder => builder.UseSqlServer(
+                            connectionString,
+                            sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly)))
+                .AddConfigurationStore(options =>
+                    options.ConfigureDbContext =
+                        builder => builder.UseSqlServer(
+                            connectionString,
+                            sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly)))
+                // In-memory
+                //.AddInMemoryClients(Clients.Get())
+                //.AddInMemoryIdentityResources(Resources.GetIdentityResources())
+                //.AddInMemoryApiResources(Resources.GetApiResources())
+                //.AddInMemoryApiScopes(Resources.GetApiScopes())
+                //.AddTestUsers(TestUsers.Get())
                 .AddDeveloperSigningCredential();
 
             services.AddControllersWithViews();
