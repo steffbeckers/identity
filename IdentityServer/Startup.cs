@@ -1,11 +1,15 @@
+using IdentityServer.Data;
+using IdentityServer.Models;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -25,8 +29,19 @@ namespace IdentityServer
             string connectionString = configuration.GetConnectionString("IdentityServerDb");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
+            services.AddDbContext<ApplicationDbContext>(builder =>
+                builder.UseSqlServer(
+                    connectionString,
+                    sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly)));
+
+            services.AddIdentity<User, IdentityRole<Guid>>()
+                .AddSignInManager<SignInManager<User>>()
+                .AddUserManager<UserManager<User>>()
+                .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddIdentityServer()
-                // SQL Database
+                .AddDeveloperSigningCredential()
                 .AddOperationalStore(options =>
                     options.ConfigureDbContext =
                         builder => builder.UseSqlServer(
@@ -37,13 +52,13 @@ namespace IdentityServer
                         builder => builder.UseSqlServer(
                             connectionString,
                             sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly)))
-                // In-memory
+                .AddAspNetIdentity<User>();
+                // In-memory config and test users
                 //.AddInMemoryClients(Clients.Get())
                 //.AddInMemoryIdentityResources(Resources.GetIdentityResources())
                 //.AddInMemoryApiResources(Resources.GetApiResources())
                 //.AddInMemoryApiScopes(Resources.GetApiScopes())
                 //.AddTestUsers(TestUsers.Get())
-                .AddDeveloperSigningCredential();
 
             services.AddControllersWithViews();
         }
@@ -76,7 +91,7 @@ namespace IdentityServer
             {
                 serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
                 serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
-                //serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
+                serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
 
                 var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
 
@@ -116,20 +131,21 @@ namespace IdentityServer
                     context.SaveChanges();
                 }
 
-                //var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-                //if (!userManager.Users.Any())
-                //{
-                //    foreach (var testUser in Users.Get())
-                //    {
-                //        var identityUser = new IdentityUser(testUser.Username)
-                //        {
-                //            Id = testUser.SubjectId
-                //        };
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                if (!userManager.Users.Any())
+                {
+                    foreach (var testUser in TestUsers.Get())
+                    {
+                        User identityUser = new User()
+                        {
+                            Id = Guid.Parse(testUser.SubjectId),
+                            UserName = testUser.Username
+                        };
 
-                //        userManager.CreateAsync(identityUser, "Password123!").Wait();
-                //        userManager.AddClaimsAsync(identityUser, testUser.Claims.ToList()).Wait();
-                //    }
-                //}
+                        userManager.CreateAsync(identityUser, testUser.Password).Wait();
+                        userManager.AddClaimsAsync(identityUser, testUser.Claims.ToList()).Wait();
+                    }
+                }
             }
         }
     }

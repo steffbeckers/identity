@@ -111,7 +111,7 @@ namespace IdentityServer
                 new TestUser {
                     SubjectId = "DCC99315-C7D7-42A9-8099-D94E52DD15A5",
                     Username = "steff",
-                    Password = "steff",
+                    Password = "Password123!", // change me!
                     Claims = new List<Claim> {
                         new Claim(JwtClaimTypes.Email, "steff@steffbeckers.eu"),
                         new Claim(JwtClaimTypes.Role, "admin")
@@ -120,7 +120,7 @@ namespace IdentityServer
                 new TestUser {
                     SubjectId = "0409F062-85BE-4B6F-BA42-B700A3CD3E65",
                     Username = "alice",
-                    Password = "alice",
+                    Password = "Password123!", // change me!
                     Claims = new List<Claim> {
                         new Claim(JwtClaimTypes.Email, "alice@alice.com"),
                     }
@@ -128,7 +128,7 @@ namespace IdentityServer
                 new TestUser {
                     SubjectId = "7DDE665A-5CF3-4A1C-90FB-0EBF71666D99",
                     Username = "bob",
-                    Password = "bob",
+                    Password = "Password123!", // change me!
                     Claims = new List<Claim> {
                         new Claim(JwtClaimTypes.Email, "bob@bob.org"),
                     }

@@ -2,3 +2,5 @@
 Update-Database -Context PersistedGrantDbContext
 Add-Migration InitialIdentityServerMigration -Context ConfigurationDbContext -OutputDir "Data/Migrations/ConfigurationDb"
 Update-Database -Context ConfigurationDbContext
+Add-Migration InitialIdentityServerMigration -Context ApplicationDbContext -OutputDir "Data/Migrations/ApplicationDb"
+Update-Database -Context ApplicationDbContext
