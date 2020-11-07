@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SecureComponent } from './secure/secure.component';
 import { HttpClientModule } from '@angular/common/http';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, SecureComponent],
@@ -13,9 +13,16 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    OAuthModule.forRoot(),
+    OAuthModule.forRoot({
+      resourceServer: {
+        allowedUrls: ['https://localhost:5001/api'],
+        sendAccessToken: true,
+      },
+    }),
   ],
-  providers: [],
+  providers: [
+    // { provide: OAuthStorage, useValue: localStorage }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

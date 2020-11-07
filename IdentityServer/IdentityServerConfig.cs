@@ -97,6 +97,26 @@ namespace IdentityServer
                     },
                     RequirePkce = true,
                     AllowPlainTextPkce = false
+                },
+                new Client
+                {
+                    ClientId = "angular",
+                    ClientName = "Angular test client using the authorization code flow with Proof-Key for Code Exchange (PKCE)",
+                    RequireClientSecret = false,
+                    RedirectUris = new List<string> {"http://localhost:4200/index.html"},
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowOfflineAccess = true,
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        "role",
+                        "test.api.read"
+                    },
+                    RequirePkce = true,
+                    AllowPlainTextPkce = false,
+                    AllowedCorsOrigins = new List<string> {"http://localhost:4200"},
                 }
             };
         }
