@@ -9,16 +9,7 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<
-        User,
-        IdentityRole<Guid>,
-        Guid,
-        IdentityUserClaim<Guid>,
-        IdentityUserRole<Guid>,
-        IdentityUserLogin<Guid>,
-        IdentityRoleClaim<Guid>,
-        IdentityUserToken<Guid>
-    >
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {}
 
@@ -30,25 +21,25 @@ namespace IdentityServer.Data
 
             builder.Entity<User>(e => e.ToTable("Users"));
             builder.Entity<IdentityRole>(e => e.ToTable("Roles"));
-            builder.Entity<IdentityUserRole<Guid>>(e =>
+            builder.Entity<IdentityUserRole<string>>(e =>
             {
                 e.ToTable("UserRoles");
                 // In case you changed the TKey type
-                e.HasKey(key => new { key.UserId, key.RoleId });
+                //e.HasKey(key => new { key.UserId, key.RoleId });
             });
-            builder.Entity<IdentityUserClaim<Guid>>(e => e.ToTable("UserClaims"));
-            builder.Entity<IdentityUserLogin<Guid>>(e =>
+            builder.Entity<IdentityUserClaim<string>>(e => e.ToTable("UserClaims"));
+            builder.Entity<IdentityUserLogin<string>>(e =>
             {
                 e.ToTable("UserLogins");
                 // In case you changed the TKey type
-                e.HasKey(key => new { key.ProviderKey, key.LoginProvider });
+                //e.HasKey(key => new { key.ProviderKey, key.LoginProvider });
             });
-            builder.Entity<IdentityRoleClaim<Guid>>(e => e.ToTable("RoleClaims"));
-            builder.Entity<IdentityUserToken<Guid>>(e =>
+            builder.Entity<IdentityRoleClaim<string>>(e => e.ToTable("RoleClaims"));
+            builder.Entity<IdentityUserToken<string>>(e =>
             {
                 e.ToTable("UserTokens");
                 // In case you changed the TKey type
-                e.HasKey(key => new { key.UserId, key.LoginProvider, key.Name });
+                //e.HasKey(key => new { key.UserId, key.LoginProvider, key.Name });
             });
 
             #endregion

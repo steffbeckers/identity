@@ -1,6 +1,8 @@
-﻿Add-Migration InitialIdentityServerMigration -Context PersistedGrantDbContext -OutputDir "Data/Migrations/PersistedGrantDb"
+﻿Add-Migration Initial -Context PersistedGrantDbContext -OutputDir "Data/Migrations/PersistedGrantDb"
+Add-Migration Initial -Context ConfigurationDbContext -OutputDir "Data/Migrations/ConfigurationDb"
+Add-Migration Initial -Context ApplicationDbContext -OutputDir "Data/Migrations/ApplicationDb"
+
+// Run app or execute manually to create database and schemas
 Update-Database -Context PersistedGrantDbContext
-Add-Migration InitialIdentityServerMigration -Context ConfigurationDbContext -OutputDir "Data/Migrations/ConfigurationDb"
 Update-Database -Context ConfigurationDbContext
-Add-Migration InitialIdentityServerMigration -Context ApplicationDbContext -OutputDir "Data/Migrations/ApplicationDb"
 Update-Database -Context ApplicationDbContext

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.Models
 {
-    public class User : IdentityUser<Guid>
+    public class User : IdentityUser
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

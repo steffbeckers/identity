@@ -172,7 +172,7 @@ namespace IdentityServerHost.Quickstart.UI
             // create dummy internal account (you can do something more complex)
             User user = new User()
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid().ToString()
             };
             await _userManager.CreateAsync(user);
             await _userManager.AddClaimsAsync(user, claims);

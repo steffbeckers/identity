@@ -34,10 +34,10 @@ namespace IdentityServer
                     connectionString,
                     sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly)));
 
-            services.AddIdentity<User, IdentityRole<Guid>>()
+            services.AddIdentity<User, IdentityRole>()
                 .AddSignInManager<SignInManager<User>>()
                 .AddUserManager<UserManager<User>>()
-                .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
@@ -138,7 +138,7 @@ namespace IdentityServer
                     {
                         User identityUser = new User()
                         {
-                            Id = Guid.Parse(testUser.SubjectId),
+                            Id = testUser.SubjectId,
                             UserName = testUser.Username
                         };
 

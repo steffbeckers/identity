@@ -3,31 +3,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IdentityServer.Data.Migrations.ApplicationDb
 {
-    public partial class InitialIdentityServerMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "AspNetRoles",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    NormalizedName = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -39,7 +25,7 @@ namespace IdentityServer.Data.Migrations.ApplicationDb
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -68,7 +54,7 @@ namespace IdentityServer.Data.Migrations.ApplicationDb
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<Guid>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -76,9 +62,9 @@ namespace IdentityServer.Data.Migrations.ApplicationDb
                 {
                     table.PrimaryKey("PK_RoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RoleClaims_AspNetRoles_RoleId",
+                        name: "FK_RoleClaims_Roles_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -89,7 +75,7 @@ namespace IdentityServer.Data.Migrations.ApplicationDb
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -111,11 +97,11 @@ namespace IdentityServer.Data.Migrations.ApplicationDb
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: false)
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserLogins", x => new { x.ProviderKey, x.LoginProvider });
+                    table.PrimaryKey("PK_UserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
                         name: "FK_UserLogins_Users_UserId",
                         column: x => x.UserId,
@@ -128,16 +114,16 @@ namespace IdentityServer.Data.Migrations.ApplicationDb
                 name: "UserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(nullable: false),
-                    RoleId = table.Column<Guid>(nullable: false)
+                    UserId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserRoles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_UserRoles_AspNetRoles_RoleId",
+                        name: "FK_UserRoles_Roles_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -152,7 +138,7 @@ namespace IdentityServer.Data.Migrations.ApplicationDb
                 name: "UserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -169,16 +155,16 @@ namespace IdentityServer.Data.Migrations.ApplicationDb
                 });
 
             migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
                 table: "RoleClaims",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "Roles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserClaims_UserId",
@@ -214,9 +200,6 @@ namespace IdentityServer.Data.Migrations.ApplicationDb
                 name: "RoleClaims");
 
             migrationBuilder.DropTable(
-                name: "Roles");
-
-            migrationBuilder.DropTable(
                 name: "UserClaims");
 
             migrationBuilder.DropTable(
@@ -229,7 +212,7 @@ namespace IdentityServer.Data.Migrations.ApplicationDb
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Users");
