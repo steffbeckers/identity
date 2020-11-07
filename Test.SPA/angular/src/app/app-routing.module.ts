@@ -2,6 +2,7 @@ import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SecureComponent } from './secure/secure.component';
+import { IsAuthenticatedGuard } from './shared/services/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -11,6 +12,7 @@ const routes: Routes = [
   {
     path: 'secure',
     component: SecureComponent,
+    canActivate: [IsAuthenticatedGuard],
   },
   {
     path: '**',

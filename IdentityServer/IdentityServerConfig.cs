@@ -85,7 +85,7 @@ namespace IdentityServer
                     {
                         new Secret("SuperSecretPassword".Sha256()) // change me!
                     },
-                    RedirectUris = new List<string> {"https://localhost:5002/signin-oidc"},
+                    RedirectUris = new List<string> { "https://localhost:5002/signin-oidc" },
                     AllowedGrantTypes = GrantTypes.Code,
                     AllowedScopes = new List<string>
                     {
@@ -103,7 +103,7 @@ namespace IdentityServer
                     ClientId = "angular",
                     ClientName = "Angular test client using the authorization code flow with Proof-Key for Code Exchange (PKCE)",
                     RequireClientSecret = false,
-                    RedirectUris = new List<string> {"http://localhost:4200/index.html"},
+                    RedirectUris = new List<string> { "http://localhost:4200/index.html" },
                     AllowedGrantTypes = GrantTypes.Code,
                     AllowOfflineAccess = true,
                     AllowedScopes = new List<string>
@@ -116,7 +116,7 @@ namespace IdentityServer
                     },
                     RequirePkce = true,
                     AllowPlainTextPkce = false,
-                    AllowedCorsOrigins = new List<string> {"http://localhost:4200"},
+                    AllowedCorsOrigins = new List<string> { "http://localhost:4200" },
                 }
             };
         }

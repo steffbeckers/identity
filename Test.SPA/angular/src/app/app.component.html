@@ -2,4 +2,13 @@
   <button type="button" routerLink="/">Home</button>
   <button type="button" routerLink="/secure">Secure</button>
 </div>
+<br />
+<div *ngIf="authService.isAuthenticated()">
+  Hi {{ authService.user.username }}!
+</div>
 <router-outlet></router-outlet>
+<!-- <div *ngIf="authService.isAuthenticated()" style="white-space: pre">
+  {{ authService.user | json }}
+</div>
+<br />
+<button type="button" (click)="authService.refresh()">Refresh</button> -->
