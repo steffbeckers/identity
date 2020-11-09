@@ -1,5 +1,6 @@
 using IdentityServer.Data;
 using IdentityServer.Models;
+using IdentityServer4;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -53,12 +56,31 @@ namespace IdentityServer
                             connectionString,
                             sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly)))
                 .AddAspNetIdentity<User>();
-                // In-memory config and test users
-                //.AddInMemoryClients(Clients.Get())
-                //.AddInMemoryIdentityResources(Resources.GetIdentityResources())
-                //.AddInMemoryApiResources(Resources.GetApiResources())
-                //.AddInMemoryApiScopes(Resources.GetApiScopes())
-                //.AddTestUsers(TestUsers.Get())
+            // In-memory config and test users
+            //.AddInMemoryClients(Clients.Get())
+            //.AddInMemoryIdentityResources(Resources.GetIdentityResources())
+            //.AddInMemoryApiResources(Resources.GetApiResources())
+            //.AddInMemoryApiScopes(Resources.GetApiScopes())
+            //.AddTestUsers(TestUsers.Get())
+
+            services.AddAuthentication()
+                .AddOpenIdConnect("aad", "Azure Active Directory", options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    options.SignOutScheme = IdentityServerConstants.SignoutScheme;
+
+                    options.Authority = "https://login.windows.net/cb03c3c2-d75d-4685-83e9-cf5606cd3d14"; // Directory (tenant) ID
+                    options.ClientId = "2f384861-5a80-4d3d-8137-93835b67ee66"; // Application (client) ID
+                    options.ResponseType = OpenIdConnectResponseType.IdToken;
+                    options.CallbackPath = "/signin-aad";
+                    options.SignedOutCallbackPath = "/signout-callback-aad";
+                    options.RemoteSignOutPath = "/signout-aad";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = "name",
+                        RoleClaimType = "role"
+                    };
+                });
 
             services.AddControllersWithViews();
         }

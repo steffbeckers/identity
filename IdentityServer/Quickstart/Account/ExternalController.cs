@@ -100,7 +100,7 @@ namespace IdentityServerHost.Quickstart.UI
                 // this might be where you might initiate a custom workflow for user registration
                 // in this sample we don't show how that would be done, as our sample implementation
                 // simply auto-provisions new external user
-                user = await AutoProvisionUser(provider, providerUserId, claims);
+                user = await AutoProvisionUserAsync(provider, providerUserId, claims);
             }
 
             // this allows us to collect any additional claims or properties
@@ -167,18 +167,67 @@ namespace IdentityServerHost.Quickstart.UI
             return (user, provider, providerUserId, claims);
         }
 
-        private async Task<User> AutoProvisionUser(string provider, string providerUserId, IEnumerable<Claim> claims)
+        private async Task<User> AutoProvisionUserAsync(string provider, string providerUserId, IEnumerable<Claim> claims)
         {
-            // create dummy internal account (you can do something more complex)
-            User user = new User()
-            {
-                Id = Guid.NewGuid().ToString()
-            };
-            await _userManager.CreateAsync(user);
-            await _userManager.AddClaimsAsync(user, claims);
+            string randomId = Guid.NewGuid().ToString().ToUpper();
 
-            // add external user ID to new account
-            await _userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, provider));
+            User user = new User
+            {
+                Id = randomId,
+                UserName = randomId,
+            };
+
+            List<Claim> filteredClaims = new List<Claim>();
+
+            string name = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Name)?.Value ??
+                claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+            string firstName = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.GivenName)?.Value ??
+                claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
+            string lastName = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.FamilyName)?.Value ??
+                claims.FirstOrDefault(x => x.Type == ClaimTypes.Surname)?.Value;
+            if (!string.IsNullOrEmpty(firstName))
+            {
+                filteredClaims.Add(new Claim(JwtClaimTypes.GivenName, firstName));
+                user.FirstName = firstName;
+            }
+            if (!string.IsNullOrEmpty(lastName))
+            {
+                filteredClaims.Add(new Claim(JwtClaimTypes.FamilyName, lastName));
+                user.LastName = lastName;
+            }
+            if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
+            {
+                filteredClaims.Add(new Claim(JwtClaimTypes.Name, firstName + " " + lastName));
+            }
+
+            string email = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Email)?.Value ??
+               claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            if (!string.IsNullOrEmpty(email))
+            {
+                filteredClaims.Add(new Claim(JwtClaimTypes.Email, email));
+                user.Email = email;
+            }
+
+            IdentityResult identityResult = await _userManager.CreateAsync(user);
+            if (!identityResult.Succeeded)
+            {
+                throw new Exception(identityResult.Errors.First().Description);
+            }
+
+            if (filteredClaims.Any())
+            {
+                identityResult = await _userManager.AddClaimsAsync(user, filteredClaims);
+                if (!identityResult.Succeeded)
+                {
+                    throw new Exception(identityResult.Errors.First().Description);
+                }
+            }
+
+            identityResult = await _userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, provider));
+            if (!identityResult.Succeeded)
+            {
+                throw new Exception(identityResult.Errors.First().Description);
+            }
 
             return user;
         }
