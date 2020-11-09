@@ -31,6 +31,9 @@ namespace IdentityServer
         {
             return new List<ApiResource>
             {
+                // TODO: For managing this IdentityServer
+                // http://docs.identityserver.io/en/latest/topics/add_apis.html
+                //new ApiResource(IdentityServerConstants.LocalApi.ScopeName),
                 new ApiResource
                 {
                     Name = "test.api",
