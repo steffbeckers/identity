@@ -30,7 +30,7 @@ namespace Test.MVC
             .AddCookie("Cookie")
             .AddOpenIdConnect("OIDC", options =>
             {
-                options.Authority = "https://localhost:5000";
+                options.Authority = configuration.GetValue<string>("IdentityServer");
                 options.ClientId = "oidc";
                 options.ClientSecret = "SuperSecretPassword";
 

@@ -18,6 +18,10 @@ namespace Test.MVC
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(options =>
+                {
+                    options.AddEnvironmentVariables();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

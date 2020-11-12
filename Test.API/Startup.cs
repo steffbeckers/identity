@@ -30,7 +30,7 @@ namespace Test.API
                 .AddIdentityServerAuthentication("Bearer", options =>
                 {
                     options.ApiName = "test.api";
-                    options.Authority = "https://localhost:5000";
+                    options.Authority = configuration.GetValue<string>("IdentityServer");
                 });
 
             services.AddControllers();
