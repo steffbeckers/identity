@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace Test.API.Controllers
 {
@@ -11,14 +12,24 @@ namespace Test.API.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
+
+        public TestController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         [HttpGet]
         public IActionResult Test()
         {
+            string apiEndpoint = _configuration.GetValue<string>("API");
+            string identityServerEndpoint = _configuration.GetValue<string>("IdentityServer");
+
             return Ok(new
             {
                 name = "Test API",
-                securedEndpoint = "https://localhost:5001/api/weatherforecast",
-                tokenEndpoint = "https://localhost:5000/connect/token"
+                securedEndpoint = $"{apiEndpoint}/weatherforecast",
+                tokenEndpoint = $"{identityServerEndpoint}/connect/token"
             });
         }
     }

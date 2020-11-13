@@ -1,0 +1,16 @@
+name: identity
+registry: registry.steffbeckers.eu
+services:
+- name: identityserver
+  project: IdentityServer/IdentityServer.csproj
+  env:
+  - ConnectionStrings__IdentityServerDb=Server=mssql;Database=IdentityServer;User ID=sa;Password=OJPVz3waeUwkYBls1fqU;MultipleActiveResultSets=true;
+- name: test-api
+  project: Test.API/Test.API.csproj
+  env:
+  - API=https://api.test.sso.steffbeckers.eu/api
+  - IdentityServer=https://sso.steffbeckers.eu
+- name: test-mvc
+  project: Test.MVC/Test.MVC.csproj
+  env:
+  - IdentityServer=https://sso.steffbeckers.eu
