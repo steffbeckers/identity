@@ -106,7 +106,7 @@ namespace IdentityServer
                     ClientId = "angular",
                     ClientName = "Angular test client using the authorization code flow with Proof-Key for Code Exchange (PKCE)",
                     RequireClientSecret = false,
-                    RedirectUris = new List<string> { "http://localhost:4200/index.html" },
+                    RedirectUris = new List<string> { "http://localhost:4200" },
                     AllowedGrantTypes = GrantTypes.Code,
                     AllowOfflineAccess = true,
                     AllowedScopes = new List<string>
