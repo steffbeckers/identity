@@ -14,3 +14,5 @@ services:
     project: Test.MVC/Test.MVC.csproj
     env:
       - IdentityServer=https://sso.steffbeckers.eu
+  - name: test-angular
+    image: registry.steffbeckers.eu/identity/test-angular

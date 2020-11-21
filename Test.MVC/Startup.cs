@@ -38,7 +38,7 @@ namespace Test.MVC
             .AddOpenIdConnect("OIDC", options =>
             {
                 options.Authority = configuration.GetValue<string>("IdentityServer");
-                options.ClientId = "oidc";
+                options.ClientId = "mvc";
                 options.ClientSecret = "SuperSecretPassword";
 
                 options.ResponseType = "code";

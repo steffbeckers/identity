@@ -22,6 +22,7 @@ namespace IdentityServer
                 new IdentityResource
                 {
                     Name = "role",
+                    DisplayName = "Role",
                     UserClaims = new List<string> { "role" }
                 }
             };
@@ -82,13 +83,16 @@ namespace IdentityServer
                 },
                 new Client
                 {
-                    ClientId = "oidc",
-                    ClientName = "Test client using the authorization code flow with Proof-Key for Code Exchange (PKCE)",
+                    ClientId = "mvc",
+                    ClientName = "MVC test client using the authorization code flow with Proof-Key for Code Exchange (PKCE)",
                     ClientSecrets = new List<Secret>
                     {
                         new Secret("SuperSecretPassword".Sha256()) // change me!
                     },
-                    RedirectUris = new List<string> { "https://localhost:5002/signin-oidc" },
+                    RedirectUris = new List<string> { 
+                        "https://localhost:5002/signin-oidc",
+                        "https://mvc.test.sso.steffbeckers.eu/signin-oidc"
+                    },
                     AllowedGrantTypes = GrantTypes.Code,
                     AllowedScopes = new List<string>
                     {
@@ -106,7 +110,10 @@ namespace IdentityServer
                     ClientId = "angular",
                     ClientName = "Angular test client using the authorization code flow with Proof-Key for Code Exchange (PKCE)",
                     RequireClientSecret = false,
-                    RedirectUris = new List<string> { "http://localhost:4200" },
+                    RedirectUris = new List<string> {
+                        "http://localhost:4200",
+                        "https://angular.test.sso.steffbeckers.eu"
+                    },
                     AllowedGrantTypes = GrantTypes.Code,
                     AllowOfflineAccess = true,
                     AllowedScopes = new List<string>
@@ -119,7 +126,10 @@ namespace IdentityServer
                     },
                     RequirePkce = true,
                     AllowPlainTextPkce = false,
-                    AllowedCorsOrigins = new List<string> { "http://localhost:4200" },
+                    AllowedCorsOrigins = new List<string> {
+                        "http://localhost:4200",
+                        "https://angular.test.sso.steffbeckers.eu"
+                    },
                 }
             };
         }
