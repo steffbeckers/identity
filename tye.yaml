@@ -1,4 +1,5 @@
 name: identity
+namespace: identity
 registry: registry.steffbeckers.eu/identity
 services:
   - name: identityserver
@@ -8,11 +9,12 @@ services:
   - name: test-api
     project: Test.API/Test.API.csproj
     env:
-      - API=https://api.test.sso.steffbeckers.eu/api
       - IdentityServer=https://sso.steffbeckers.eu
+      - API=https://api.test.sso.steffbeckers.eu/api
   - name: test-mvc
     project: Test.MVC/Test.MVC.csproj
     env:
       - IdentityServer=https://sso.steffbeckers.eu
+      - API=https://api.test.sso.steffbeckers.eu/api
   - name: test-angular
     image: registry.steffbeckers.eu/identity/test-angular
