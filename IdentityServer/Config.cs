@@ -2,11 +2,8 @@
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace IdentityServer
 {
@@ -89,7 +86,7 @@ namespace IdentityServer
                     {
                         new Secret("SuperSecretPassword".Sha256()) // change me!
                     },
-                    RedirectUris = new List<string> { 
+                    RedirectUris = new List<string> {
                         "https://localhost:5002/signin-oidc",
                         "https://mvc.test.sso.steffbeckers.eu/signin-oidc"
                     },
