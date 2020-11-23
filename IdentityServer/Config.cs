@@ -69,13 +69,24 @@ namespace IdentityServer
             {
                 new Client
                 {
-                    ClientId = "oauth",
+                    ClientId = "client",
                     ClientName = "Test client using client credentials",
                     ClientSecrets = new List<Secret>
                     {
                         new Secret("SuperSecretPassword".Sha256()) // change me!
                     },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = new List<string> { "test.api.read" }
+                },
+                new Client
+                {
+                    ClientId = "device",
+                    ClientName = "Test client using device flow",
+                    ClientSecrets = new List<Secret>
+                    {
+                        new Secret("SuperSecretPassword".Sha256()) // change me!
+                    },
+                    AllowedGrantTypes = GrantTypes.DeviceFlow,
                     AllowedScopes = new List<string> { "test.api.read" }
                 },
                 new Client
