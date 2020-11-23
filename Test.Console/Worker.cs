@@ -73,8 +73,6 @@ namespace Test.Console
             var authorizeResponse = await RequestAuthorizationAsync();
             var tokenResponse = await RequestTokenAsync(authorizeResponse);
 
-            _logger.LogInformation(tokenResponse.AccessToken);
-
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenResponse.AccessToken);
         }
 
