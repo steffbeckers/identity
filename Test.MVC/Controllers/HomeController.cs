@@ -34,7 +34,7 @@ namespace Test.MVC.Controllers
         [Authorize]
         public async Task<IActionResult> Secure()
         {
-            _logger.LogInformation("Access granted to Secure page for: " + User.Identity.Name);
+            _logger.LogInformation("Access granted to Secure page");
 
             HttpRequestMessage getWeatherRequest = new HttpRequestMessage()
             {
