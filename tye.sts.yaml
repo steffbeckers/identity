@@ -1,0 +1,14 @@
+name: skoruba-identityserver4
+namespace: skoruba-identityserver4
+registry: registry.steffbeckers.eu/skoruba-identityserver4
+services:
+  - name: test-api
+    project: Test.API/Test.API.csproj
+    env:
+      - IdentityServer=https://sts.steffbeckers.eu
+      - API=https://api.test.sts.steffbeckers.eu/api
+  - name: test-mvc
+    project: Test.MVC/Test.MVC.csproj
+    env:
+      - IdentityServer=https://sts.steffbeckers.eu
+      - API=https://api.test.sts.steffbeckers.eu/api

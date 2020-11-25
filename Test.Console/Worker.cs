@@ -35,11 +35,27 @@ namespace Test.Console
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await AuthenticateAsync();
+            try
+            {
+                await AuthenticateAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error while authenticating: " + ex.Message, ex);
+                throw;
+            }
 
             while (!stoppingToken.IsCancellationRequested)
             {
-                await GetWeatherForecastAsync();
+                try
+                {
+                    await GetWeatherForecastAsync();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError("Error while retrieving the weather forecast: " + ex.Message, ex);
+                    throw;
+                }
                 await Task.Delay(5000, stoppingToken);
             }
         }

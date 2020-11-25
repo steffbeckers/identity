@@ -16,5 +16,5 @@ services:
     env:
       - IdentityServer=https://sso.steffbeckers.eu
       - API=https://api.test.sso.steffbeckers.eu/api
-  - name: test-angular
-    image: registry.steffbeckers.eu/identity/test-angular
+  # - name: test-angular
+  #   image: registry.steffbeckers.eu/identity/test-angular
