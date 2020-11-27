@@ -33,6 +33,14 @@ namespace Test.API
                     options.Authority = configuration.GetValue<string>("IdentityServer");
                 });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ReadOnlyAccess", policy => policy.RequireClaim("test.api.read"));
+                options.AddPolicy("FullAccess", policy => 
+                    policy.RequireClaim("test.api.read")
+                          .RequireClaim("test.api.write"));
+            });
+
             services.AddControllers();
         }
 

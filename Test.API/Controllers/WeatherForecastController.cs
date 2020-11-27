@@ -25,6 +25,7 @@ namespace Test.API.Controllers
             _logger = logger;
         }
 
+        [Authorize(Policy = "ReadOnlyAccess")]
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
@@ -38,6 +39,15 @@ namespace Test.API.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [Authorize(Policy = "FullAccess")]
+        [HttpPost]
+        public WeatherForecast Post([FromBody] WeatherForecast weatherForecast)
+        {
+            _logger.LogInformation("How do you know???");
+
+            return weatherForecast;
         }
     }
 }

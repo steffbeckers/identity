@@ -46,7 +46,8 @@ namespace Test.MVC
 
                 // options.Scope.Add("oidc"); // default scope
                 // options.Scope.Add("profile"); // default scope
-                options.Scope.Add("test.api.read");
+                options.Scope.Add("roles");
+                options.Scope.Add("test.api.readonly");
 
                 options.SaveTokens = true;
             });
