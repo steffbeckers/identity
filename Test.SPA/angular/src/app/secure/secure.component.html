@@ -1,9 +1,13 @@
 <h1>Secure Page</h1>
 <p>Access granted!</p>
 <h2>Weather forecast</h2>
-<div *ngIf="weatherForecast" style="white-space: pre">
-  {{ weatherForecast | json }}
-</div>
-<div *ngIf="error">
-  {{ error }}
+
+<div *ngIf="weatherForecast">
+  <textarea [(ngModel)]="weatherForecastJson" rows="25" cols="50"></textarea>
+  <div style="display: flex; gap: 8px; align-items: center">
+    <button (click)="update()">Update</button>
+    <div *ngIf="error" style="color: red">
+      {{ error }}
+    </div>
+  </div>
 </div>

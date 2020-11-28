@@ -15,4 +15,13 @@ export class WeatherService {
       `${environment.apis.test}/weatherforecast`
     );
   }
+
+  postWeatherForecast(
+    weatherForecast: WeatherForecast
+  ): Observable<WeatherForecast> {
+    return this.http.post<WeatherForecast>(
+      `${environment.apis.test}/weatherforecast`,
+      weatherForecast
+    );
+  }
 }

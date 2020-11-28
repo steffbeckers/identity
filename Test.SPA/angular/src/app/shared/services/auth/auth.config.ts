@@ -19,6 +19,6 @@ export const authCodeFlowConfig: AuthConfig = {
   // The first four are defined by OIDC.
   // Important: Request offline_access to get a refresh token
   // The api scope is a usecase specific one
-  scope: 'openid profile email offline_access roles test.api.readonly',
+  scope: 'openid profile email offline_access roles test.api',
   showDebugInformation: !environment.production,
 };

@@ -7,11 +7,15 @@ import { SecureComponent } from './secure/secure.component';
 import { HttpClientModule } from '@angular/common/http';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { environment } from 'src/environments/environment';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, SecureComponent],
   imports: [
     BrowserModule,
+    CommonModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     OAuthModule.forRoot({
