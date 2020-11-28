@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apis: {
-    test: 'https://localhost:5001/api',
+    test: 'https://api.test.sts.steffbeckers.eu/api',
   },
 };
 

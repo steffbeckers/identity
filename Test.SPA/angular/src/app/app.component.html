@@ -4,7 +4,11 @@
 </div>
 <br />
 <div *ngIf="authService.isAuthenticated()">
-  Hi {{ authService.user.username }}!
+  <div>Hi {{ authService.user.username }}!</div>
+  <br />
+  <div>
+    <button type="button" (click)="authService.refresh()">Refresh</button>
+  </div>
 </div>
 <router-outlet></router-outlet>
 <!-- <div *ngIf="authService.isAuthenticated()" style="white-space: pre">

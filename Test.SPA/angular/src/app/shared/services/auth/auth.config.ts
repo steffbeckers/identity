@@ -1,4 +1,5 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
+import { environment } from 'src/environments/environment';
 
 export const authCodeFlowConfig: AuthConfig = {
   // Url of the Identity Provider
@@ -19,5 +20,5 @@ export const authCodeFlowConfig: AuthConfig = {
   // Important: Request offline_access to get a refresh token
   // The api scope is a usecase specific one
   scope: 'openid profile email offline_access roles test.api.readonly',
-  showDebugInformation: true,
+  showDebugInformation: !environment.production,
 };

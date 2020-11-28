@@ -9,14 +9,20 @@ import { WeatherForecast } from '../shared/services/weather/weatherforecast.mode
 })
 export class SecureComponent implements OnInit {
   weatherForecast: WeatherForecast[];
+  error: string;
 
   constructor(private weatherService: WeatherService) {}
 
   ngOnInit(): void {
-    this.weatherService
-      .getWeatherForecast()
-      .subscribe((weatherForecast: WeatherForecast[]) => {
+    this.weatherService.getWeatherForecast().subscribe(
+      (weatherForecast: WeatherForecast[]) => {
         this.weatherForecast = weatherForecast;
-      });
+      },
+      (error: any) => {
+        if (error.status === 403) {
+          this.error = 'Not allowed to retrieve weather forecast.';
+        }
+      }
+    );
   }
 }
