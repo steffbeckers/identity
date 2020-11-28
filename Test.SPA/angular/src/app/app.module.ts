@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { SecureComponent } from './secure/secure.component';
 import { HttpClientModule } from '@angular/common/http';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, SecureComponent],
@@ -15,7 +16,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     HttpClientModule,
     OAuthModule.forRoot({
       resourceServer: {
-        allowedUrls: ['https://localhost:5001/api'],
+        allowedUrls: [environment.apis.test],
         sendAccessToken: true,
       },
     }),
