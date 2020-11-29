@@ -102,9 +102,9 @@ namespace Test.Console
             var response = await client.RequestDeviceAuthorizationAsync(new DeviceAuthorizationRequest
             {
                 Address = disco.DeviceAuthorizationEndpoint,
-                ClientId = "device",
-                ClientSecret = "SuperSecretPassword",
-                Scope = "test.api.read"
+                ClientId = _configuration.GetValue<string>("ClientId"),
+                ClientSecret = _configuration.GetValue<string>("ClientSecret"),
+                Scope = _configuration.GetValue<string>("Scope")
             });
 
             if (response.IsError) throw new Exception(response.Error);
@@ -134,8 +134,8 @@ namespace Test.Console
                 var response = await client.RequestDeviceTokenAsync(new DeviceTokenRequest
                 {
                     Address = disco.TokenEndpoint,
-                    ClientId = "device",
-                    ClientSecret = "SuperSecretPassword",
+                    ClientId = _configuration.GetValue<string>("ClientId"),
+                    ClientSecret = _configuration.GetValue<string>("ClientSecret"),
                     DeviceCode = authorizeResponse.DeviceCode
                 });
 
